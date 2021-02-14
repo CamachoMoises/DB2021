@@ -1,11 +1,19 @@
 <div class="box" >
   <div class="login-wrapper" fxLayout="row" fxLayoutAlign="end" >
 
+    <div>
+      <img
+
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Comcast_Technology_Center.jpg/250px-Comcast_Technology_Center.jpg"
+      alt="as"
+      style="max-width:350px;max-height:530px;border-radius: 1px 70px">
+  </div>
+
     <mat-card>
       <mat-card-header>
         <mat-card-title>Registrate</mat-card-title>
       </mat-card-header>
-
+      <br>
       <form class="example-form" [formGroup]="RegisterForm" (ngSubmit)="onRegister()" >
         <mat-card-content>
           <mat-form-field class="example-full-width">
@@ -16,12 +24,15 @@
             <input matInput placeholder="Contraseña" type="password" formControlName="password">
           </mat-form-field>
 
-          <mat-checkbox formControlName="terms">Esta de acuerdo con los termios y condiciones</mat-checkbox>
-          <span class="help-block">
-
+          <mat-checkbox formControlName="terms">Esta de acuerdo con los
+            <a role="button" (click)="conditions=!conditions">termios y condiciones</a>
+          </mat-checkbox>
+          <span class="help-block" *ngIf="conditions">
+            sadsdsdas
           </span>
+
           <div fxLayoutAlign="center center">
-            <button mat-raised-button color="warn" type="submit" [disabled]="!RegisterForm.valid" >Registro</button>
+            <button mat-raised-button color="warn" class="submit" type="submit" [disabled]="!RegisterForm.valid" >Registro</button>
           </div>
         </mat-card-content>
       </form>
@@ -38,8 +49,6 @@
         </p>
       </div>
     </mat-card>
-
-
   </div>
 
 </div>

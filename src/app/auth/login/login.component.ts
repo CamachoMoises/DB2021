@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -9,16 +9,22 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  conditions = false;
   LoginForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    user: new FormControl(null, [
+      Validators.required,
+      Validators.pattern('^[a-z]{2,254}'),
+    ]),
+    password: new FormControl(null, [
+      Validators.required,
+      Validators.pattern('^[^a-z]{2,254}'),
+    ]),
+    terms: new FormControl(false, Validators.requiredTrue),
   });
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
-  async onLogin() {
-    const { email, password } = this.LoginForm.value;
-    console.log(email, password);
-    const user = await this.authService.login(email, password);
+  onLogin() {
+    this.router.navigate(['/']);
   }
 }

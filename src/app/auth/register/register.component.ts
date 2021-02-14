@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  conditions = false;
   RegisterForm = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, Validators.required),

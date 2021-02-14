@@ -38,10 +38,15 @@
   padding: 0.8375em 0;
 }
 .box {
-  margin-right: 25%;
-  margin-top: 15%;
+  margin-right: 25% !important;
+  margin-top: 10% !important;
+  margin: left 10%;
+  margin-bottom: 10%;
 }
 input.ng-invalid.ng-touched,
 select.ng-invalid {
   border: 1px solid red;
+}
+.submit {
+  margin-top: 20px;
 }

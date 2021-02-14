@@ -39,5 +39,12 @@
 }
 .box {
   margin-right: 25%;
-  margin-top: 15%;
+  margin-top: 10%;
+}
+input.ng-invalid.ng-touched,
+select.ng-invalid {
+  border: 1px solid red;
+}
+.submit {
+  margin-top: 20px;
 }
