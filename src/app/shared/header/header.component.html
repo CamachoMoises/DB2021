@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" >
+<mat-toolbar color="warm" >
   <mat-toolbar-row>
     <button mat-icon-button (click)="toogleSideBar()" >
       <mat-icon>menu</mat-icon>
@@ -7,13 +7,18 @@
 
     <div fxFlex fxLayout="row" fxLayoutAlign="flex-end" >
       <ul fxLayout="row" flexlayoutGap="20px" >
-
-        <li>
+        <li *ngIf="!UserLog" >
+          <button mat-button [routerLink]="['/auth/login']">
+            <mat-icon>vpn_key</mat-icon>
+          </button>
+        </li>
+        <li *ngIf="UserLog">
           <button mat-button [matMenuTriggerFor]="menu">
             <mat-icon>person_outline</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item> {{user?.email}} </button>
+            <button mat-menu-item (click)="logout()">
               <mat-icon>exit_to_app</mat-icon>
               Sing out
             </button>

@@ -1,0 +1,45 @@
+<div class="box" >
+  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="end" >
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Registrate</mat-card-title>
+      </mat-card-header>
+
+      <form class="example-form" [formGroup]="RegisterForm" (ngSubmit)="onRegister()" >
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Correo" type="email" formControlName="email">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Contraseña" type="password" formControlName="password">
+          </mat-form-field>
+
+          <mat-checkbox formControlName="terms">Esta de acuerdo con los termios y condiciones</mat-checkbox>
+          <span class="help-block">
+
+          </span>
+          <div fxLayoutAlign="center center">
+            <button mat-raised-button color="warn" type="submit" [disabled]="!RegisterForm.valid" >Registro</button>
+          </div>
+        </mat-card-content>
+      </form>
+      <br>
+
+      <div fxLayoutAlign="center">
+        <p> Tienes cuenta?
+          <a [routerLink]="[ '/auth/login']">Accede</a>
+        </p>
+      </div>
+      <div fxLayoutAlign="center">
+        <p> Bypass al
+          <a [routerLink]="[ '/']">Home</a>
+        </p>
+      </div>
+    </mat-card>
+
+
+  </div>
+
+</div>
