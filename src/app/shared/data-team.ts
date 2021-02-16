@@ -1,12 +1,12 @@
 export interface DataTeam {
-  id: number;
-  first_name: string;
-  height_feet: Number;
-  height_inches: number;
-  last_name: string;
-  position: string;
+  id?: number;
+  first_name?: string;
+  height_feet?: Number;
+  height_inches?: number;
+  last_name?: string;
+  position?: string;
   team?: Team;
-  weight_pounds: number;
+  weight_pounds?: number;
 }
 export interface Team {
   id?: number;

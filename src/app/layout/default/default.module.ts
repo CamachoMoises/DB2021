@@ -37,6 +37,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RegistrosComponent } from './registros/registros.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MainComponent,
     NBAPlayersComponent,
     DetailComponent,
+    RegistrosComponent,
   ],
   imports: [
     CommonModule,
@@ -82,6 +85,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatRadioModule,
     MatDatepickerModule,
     MatTooltipModule,
+    MatIconModule,
   ],
   providers: [NbaDataService],
 })

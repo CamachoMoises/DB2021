@@ -1,48 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { NbaDataService } from 'src/app/shared/nba-data.service';
+import { DataTeam } from 'src/app/shared/data-team';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-nba-players',
   templateUrl: './nba-players.component.html',
   styleUrls: ['./nba-players.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.5, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class NBAPlayersComponent implements OnInit {
-  public metaData: any = [];
+  displayedColumns = [
+    'id',
+    'first_name',
+    'last_name',
+    'height_inches',
+    'height_feet',
+    'weight_pounds',
+    'position',
+  ];
+
+  public metaData: DataTeam[] = [];
+
   constructor(private Nbaservice: NbaDataService) {}
 
-  ngOnInit(): void {
-    this.metaData = this.Nbaservice.getAllPlayes().subscribe(
-      (data) => (this.metaData = data)
-    );
-    console.log(this.metaData);
+  ngOnInit() {
+    this.Nbaservice.getAllPlayes().subscribe((res) => {
+      this.metaData = res.data;
+    });
   }
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  onDetail(id: any) {
+    console.log(id);
+  }
 
+  refreshData() {}
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    //this.metaData.filter = filterValue.trim().toLowerCase();
   }
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
