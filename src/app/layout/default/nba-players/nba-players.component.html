@@ -1,64 +1,137 @@
-<mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+<mat-form-field appearance="legacy">
+  <mat-label>Busqueda de jugadores</mat-label>
+  <input matInput placeholder="E.j LeBron"  #searchInput>
+  <mat-icon matSuffix>search</mat-icon>
+  <mat-hint>Ojito con esto</mat-hint>
 </mat-form-field>
-<div  *ngIf="metaData !== null">
-  <table mat-table [dataSource]="metaData" class="mat-elevation-z8">
+
+<!-- <mat-form-field appearance="legacy" class="search">
+  <mat-label>Busqueda de equipos</mat-label>
+  <input matInput placeholder="E.j Knicks"  #searchTeanInput>
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field> -->
+
+<br>
+<br>
+
+<div *ngIf="isSearching">
+  <div class="example-loading-shade" >
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+<table mat-table
+       [dataSource]="dataD"
+       multiTemplateDataRows
+       class="mat-elevation-z8"
+       matSort>
 
     <!-- id Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> Id </th>
       <td mat-cell *matCellDef="let element">
         {{element.id||"--"}}
-        <div [class]="properties||'null'">
+        <div [class]="element.position||'null'">
           <mat-icon>done</mat-icon>
-        </div>
+       </div>
       </td>
     </ng-container>
 
     <!-- first_name Column -->
     <ng-container matColumnDef="first_name">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Nombre </th>
       <td mat-cell *matCellDef="let element"> {{element.first_name||"--"}} </td>
     </ng-container>
 
     <!-- first_name Column -->
     <ng-container matColumnDef="last_name">
-      <th mat-header-cell *matHeaderCellDef> Apellido </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
       <td mat-cell *matCellDef="let element"> {{element.last_name||"--"}} </td>
     </ng-container>
 
     <!-- height_inches Column -->
     <ng-container matColumnDef="height_inches">
-      <th mat-header-cell *matHeaderCellDef> Altura(Pulgadas) </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Altura(Pulgadas) </th>
       <td mat-cell *matCellDef="let element"> {{element.height_inches||"--"}} </td>
     </ng-container>
 
     <!-- height_feet Column -->
     <ng-container matColumnDef="height_feet">
-      <th mat-header-cell *matHeaderCellDef> Altura(Pies) </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Altura(Pies) </th>
       <td mat-cell *matCellDef="let element"> {{element.height_feet|| "--"}} </td>
     </ng-container>
 
-     <!-- weight_pounds Column -->
+      <!-- weight_pounds Column -->
     <ng-container matColumnDef="weight_pounds">
-      <th mat-header-cell *matHeaderCellDef> Peso(Libras) </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Peso(Libras) </th>
       <td mat-cell *matCellDef="let element"> {{element.weight_pounds||"--"}} </td>
     </ng-container>
 
     <!-- position Column -->
     <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> Posicion </th>
-      <td mat-cell *matCellDef="let element"> {{properties||"--"}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Posicion </th>
+      <td mat-cell *matCellDef="let element"> {{element.position||"--"}} </td>
     </ng-container>
 
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="example-element-detail"
+            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="example-element-description">
+            <p>De acuerdo al valor en la posición posee un color diferente en la primera columna. Ejemplo, para la posición C aparece Rojo. Si el valor se desconoce la posicion del jugador el color es Gris</p>
+            <mat-grid-list cols="3" rowHeight="40px">
+              <mat-grid-tile
+              [colspan]="1"
+              [rowspan]="1">
+                <strong>Nombre del equipo:</strong>
+                {{ element.team.name }}
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <strong>Conferencia:</strong>
+                {{ element.team.conference }}
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <strong>Abreviatura:</strong>
+                {{ element.team.abbreviation }}
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <strong>Nombre completo:</strong>
+                {{ element.team.full_name }}
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <strong>División:</strong>
+                {{ element.team.division }}
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <strong>Ciudad:</strong>
+                {{ element.team.city }}
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+        </div>
+      </td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="cosole.log(element.id)"></tr>
-
-    <!-- Row shown when there is no matching data. -->
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      <td class="mat-cell" colspan="4">No data matching the filter " {{searchInput.value}} "</td>
     </tr>
   </table>
-</div>
+  <mat-paginator
+  showFirstLastButtons
+  [length]="length"
+  [pageSize]="10"
+  [pageSizeOptions]="pageSizeOptions">
+  </mat-paginator>
+
+
+
+
+
 

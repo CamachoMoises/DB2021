@@ -40,6 +40,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RegistrosComponent } from './registros/registros.component';
 import { MatIconModule } from '@angular/material/icon';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 @NgModule({
   declarations: [
     DefaultComponent,
@@ -86,6 +88,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatDatepickerModule,
     MatTooltipModule,
     MatIconModule,
+
+    FlexLayoutModule,
   ],
   providers: [NbaDataService],
 })
