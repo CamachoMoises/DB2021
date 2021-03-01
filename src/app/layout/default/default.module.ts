@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { DefaultComponent } from './default.component';
 import { MainComponent } from './main/main.component';
 import { NBAPlayersComponent } from './nba-players/nba-players.component';
-import { DetailComponent } from './nba-players/detail/detail.component';
+import { PrimFormComponent } from './registros/prim-form/prim-form.component';
 import { NbaDataService } from '../../shared/nba-data.service';
 
 import { MatCardModule } from '@angular/material/card';
@@ -39,6 +40,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RegistrosComponent } from './registros/registros.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -47,12 +50,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     DefaultComponent,
     MainComponent,
     NBAPlayersComponent,
-    DetailComponent,
     RegistrosComponent,
+    PrimFormComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
 
     SharedModule,
 
@@ -88,6 +92,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatDatepickerModule,
     MatTooltipModule,
     MatIconModule,
+    MatStepperModule,
+    MatMomentDateModule,
 
     FlexLayoutModule,
   ],

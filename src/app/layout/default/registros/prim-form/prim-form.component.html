@@ -1,0 +1,123 @@
+<form [formGroup]="prim">
+  <div class="example-container">
+    <mat-form-field hintLabel="Max 20 carateres" appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput
+      formControlName="first_name"
+      minlength="3"
+      maxlength="20"
+      placeholder="Ej.LeBron">
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Max 20 carateres" appearance="fill">
+      <mat-label>Apellido</mat-label>
+      <input matInput
+      formControlName="last_name"
+      minlength="3"
+      maxlength="20"
+      placeholder="Ej. James">
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Max 2 decimales" appearance="fill">
+      <mat-label>Altura (pulgadas)</mat-label>
+      <input matInput
+      formControlName="height_inches"
+
+      maxlength="5"
+      placeholder="Ej. 10,0 ">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field hintLabel="Max 2 decimales" appearance="fill">
+      <mat-label>Altura (pies)</mat-label>
+      <input matInput
+      formControlName="height_feet"
+      maxlength="5"
+      placeholder="Ej. 10,0 ">
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Max 2 decimales" appearance="fill">
+      <mat-label>Peso (libras)</mat-label>
+      <input matInput
+      formControlName="weight_pounds"
+      placeholder="Ej. 8,01 ">
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Max 2 decimales" appearance="fill">
+      <mat-select formControlName="position"
+      appearance="fill"
+      required>
+      <mat-option [value]="null">--</mat-option>
+      <mat-option *ngFor="let position of positions"  [value]="position.value">
+        {{position.viewValue}}
+      </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="pocitionC">
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Comentarios</mat-label>
+        <input matInput
+        maxlength="5"
+        formControlName="coment"
+        placeholder="Lesiones ">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tiempo en años en la Posicion</mat-label>
+        <input matInput
+        maxlength="5"
+        formControlName="years"
+        placeholder="años ">
+      </mat-form-field>
+
+      <h3>posiciones</h3>
+      <section class="example-section">
+        <div *ngFor="let position of positions, let i = index">
+          <div *ngIf="position.value !=='c'; else checkC">
+            <mat-checkbox class="example-margin" [value]="position.value"
+            (change)="onCheckboxChange($event)">
+              {{position.viewValue}}
+            </mat-checkbox>
+          </div>
+          <ng-template #checkC>
+            <mat-checkbox
+          class="example-margin"
+          [disabled]="true"
+          [checked]="true">C</mat-checkbox>
+          </ng-template>
+        </div>
+      </section>
+
+
+
+
+      <br>
+    </div>
+
+    <!--npm install moment --save
+      npm i @angular/material-moment-adapter
+  -->
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha de Nacimiento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="brithday">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+
+
+
+    <br>
+    <button
+    mat-raised-button color="primary"
+    (click)="onNext()"
+    [disabled]="!prim.valid">Siguentes</button>
+    <p>Selected range: {{prim.value | json}}</p>
+
+  </div>
+
+</form>
